@@ -1,18 +1,38 @@
 package com.unla.utilizandoSpring.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import helpers.ViewRouteHelper;
+import models.Degree;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+	
+	@GetMapping("/degree")
+	public String degree(Model model) {
+		model.addAttribute("degree",new Degree());
+		return ViewRouteHelper.DEGREE;
+	}
+	
+	@PostMapping("/newdegree")
+	public ModelAndView newdewgree(@ModelAttribute("degree") Degree degree) {
+		ModelAndView mV = new ModelAndView();
+		mV.setViewName(ViewRouteHelper.NEWDEGREE);
+		mV.addObject("degree", degree);
+		return mV;
+	}
+	
+	
 	//GET Example: SERVER/index
 	@GetMapping("/index")
 	public String index() {
@@ -47,6 +67,12 @@ public class HomeController {
 		return mV;
 	}
 	
+	/* Una peticicón que en verdad es una redirección: Se puede usar una redirección
+	 * en caso que una vista no contenga toda la información que necesita para 
+	 * devolver un recurso. Se devuelve una instancia de RedirectView, ya que esta clase
+	 * se usa para realizar la redirección manteniendo la petición Get original 
+	 * De esta manera se redirecciona a la ruta localhost:8080/index, la cual corresponde
+	 * al primer metodo del controlador  */
 	@GetMapping("/")
 	public RedirectView redirectToHomeIndex() {
 		
