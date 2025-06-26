@@ -1,11 +1,16 @@
 package models;
 
-public class Degree {
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 
+public class Degree {
+	
 	private String name;
 
+	@Size(min=3, max=30)
 	private String institucion;
 
+	@Min(3)
 	private int year;
 
 	public Degree() {
