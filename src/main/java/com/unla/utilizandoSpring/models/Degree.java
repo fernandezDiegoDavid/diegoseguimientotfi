@@ -1,4 +1,4 @@
-package models;
+package com.unla.utilizandoSpring.models;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;

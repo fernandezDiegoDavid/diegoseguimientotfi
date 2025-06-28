@@ -1,4 +1,4 @@
-package helpers;
+package com.unla.utilizandoSpring.helpers;
 
 public class ViewRouteHelper {
 
