@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import helpers.ViewRouteHelper;
+import com.unla.utilizandoSpring.helpers.ViewRouteHelper;
+import com.unla.utilizandoSpring.models.Degree;
+
 import jakarta.validation.Valid;
-import models.Degree;
 
 @Controller
 @RequestMapping("/")
