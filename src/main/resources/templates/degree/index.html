@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- Indica que es un HTML5. -->
+<html xmlns:th="http://www.thymeleaf.org">
+ <!--<html xmlns:th="http://www.thymeleaf.org">: Necesario para que Thymeleaf entienda los atributos th:*.!-->
+
+
+<head>
+	<meta charset="UTF-8">
+	<Titlle>Degree List</Titlle>
+</head>
+<body>
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Institution</th>
+			<th>Year</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="degree : ${degrees}">
+			<td><span th:text="${degree.name}"></span></td>
+			<td><span th:text="${degree.institution}"></span></td>
+			<td><span th:text="${degree.year}"></span></td>
+		</tr>
+	</tbody>
+</table>
+
+<form action="#" th:action="@{/degrees}" th:object="${degree}" method="post">
+	<p>Name: <input type="text" th:field="*{name}" /></p>
+	<p>Institution: <input type="text" th:field="*{institucion}" /></p>
+	<p>Year: <input type="number" th:field="*{year}" /></p>
+	<input type="submit" />
+</form>
+
+</body>
+
+</html>

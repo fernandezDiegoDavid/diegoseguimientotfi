@@ -1,9 +1,11 @@
-package com.unla.utilizandoSpring.models;
+package com.unla.utilizandoSpring.dtos;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
-public class Degree {
+public class DegreeDTO {
+	
+	private int id;
 	
 	private String name;
 
@@ -13,14 +15,22 @@ public class Degree {
 	@Min(3)
 	private int year;
 
-	public Degree() {
+	public DegreeDTO() {
 	}
 
-	public Degree(String name, String institucion, int year) {
+	public DegreeDTO(String name, String institucion, int year) {
 
 		this.name = name;
 		this.institucion = institucion;
 		this.year = year;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.unla.utilizandoSpring.dtos.DegreeDTO;
 import com.unla.utilizandoSpring.helpers.ViewRouteHelper;
-import com.unla.utilizandoSpring.models.Degree;
 
 import jakarta.validation.Valid;
 
@@ -23,19 +23,23 @@ public class HomeController {
 
 	@GetMapping("/degree")
 	public String degree(Model model) {
-		model.addAttribute("degree", new Degree());
+		model.addAttribute("degree", new DegreeDTO());
 		return ViewRouteHelper.DEGREE;
 	}
 
 	@PostMapping("/newdegree")
-	public ModelAndView newdegree(@Valid @ModelAttribute("degree") Degree degree, BindingResult bindingResult) {
+	public ModelAndView newdegree(@Valid @ModelAttribute("degree") DegreeDTO degree, BindingResult bindingResult) {
+		
 		ModelAndView mV = new ModelAndView();
+		
 		if (bindingResult.hasErrors()) {
 			mV.setViewName(ViewRouteHelper.DEGREE);
 		} else {
 			mV.setViewName(ViewRouteHelper.NEWDEGREE);
 		}
+		
 		mV.addObject("degree", degree);
+		
 		return mV;
 	}
 
