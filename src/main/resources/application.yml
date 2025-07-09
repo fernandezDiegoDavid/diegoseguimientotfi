@@ -3,11 +3,14 @@ spring:
     url: ${DB_URL}
     username: ${USERNAME}
     password: ${PASSWORD}
+
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
-      dialect: org.hibernate.dialect.MySQL5Dialect
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
   thymeleaf:
     cache: false
