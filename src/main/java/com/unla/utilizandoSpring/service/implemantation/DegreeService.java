@@ -17,12 +17,13 @@ public class DegreeService implements IDegreeService {
 	// Declara el atributo que sera inyectado por Spring en tiempo de ejecucion
 	private IDegreeRepository degreeRepository;
 	
-	// // Inyecta una implemantacion del bean llamado degreeRepository que impleneta la interfaz IDegreeRepository
-	public DegreeService(@Qualifier("degreeRepository") IDegreeRepository degreeRepository) {
-		this.degreeRepository = degreeRepository;
-	}
+	private ModelMapper modelMapper;
 	
-	private ModelMapper modelMapper = new ModelMapper();
+	// // Inyecta una implemantacion del bean llamado degreeRepository que impleneta la interfaz IDegreeRepository
+	public DegreeService(@Qualifier("degreeRepository") IDegreeRepository degreeRepository,ModelMapper modelMApper) {
+		this.degreeRepository = degreeRepository;
+		this.modelMapper = modelMApper;
+	}
 	
 	@Override
 	public List<Degree> getAll(){
