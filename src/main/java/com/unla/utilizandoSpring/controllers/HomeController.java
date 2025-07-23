@@ -23,6 +23,7 @@ public class HomeController {
 
 	@GetMapping("/degree")
 	public String degree(Model model) {
+		//Model model, sirve para pasar datos del controlador a la vista
 		model.addAttribute("degree", new DegreeDTO());
 		return ViewRouteHelper.DEGREE;
 	}
@@ -63,7 +64,7 @@ public class HomeController {
 			@RequestParam(name = "nombre", required = false, defaultValue = "null") String name) {
 
 		ModelAndView mV = new ModelAndView(ViewRouteHelper.HELLO);
-		// el identificador entre comillas sebe ser el mismo en utilizado en la vista
+		// el identificador entre comillas debe ser el mismo en utilizado en la vista
 		mV.addObject("nombre", name);
 		return mV;
 	}

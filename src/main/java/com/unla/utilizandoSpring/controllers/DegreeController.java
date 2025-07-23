@@ -40,9 +40,13 @@ public class DegreeController {
 	 * para especificar como debe ser esta
 	 */
 	public ModelAndView index() {
+		
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.DEGREE_INDEX);
+		
 		mAV.addObject("degrees", degreeService.getAll());
+		
 		mAV.addObject("degree", new DegreeDTO());
+		
 		return mAV;
 		
 	}
