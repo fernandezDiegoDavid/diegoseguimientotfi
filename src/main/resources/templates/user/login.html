@@ -1,29 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>UNLa</title>
-		<!-- Bootstrap core CSS -->
-		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="/css/modern-business.css" rel="stylesheet" />
-	</head>
-	<body>
-	    <!-- Page Content -->
-	    <div class="container">
-	      <div class="jumbotron">
-	        <h1 class="display-5">Login</h1>
-	        <form th:action="@{/loginprocess}" method="post">
-		      	<input type="text" name="username" id="username" placeholder="Username" />
-		      	<input type="password" name="password" id="password" placeholder="Password" />
-		      	<input type="submit" />
-	      	</form>
-	      	<div th:if="${error != null}" class="alert alert-danger">
-		    	Invalid username or password.
-		    </div>
-	      </div>
-	    </div>
-	    <!-- Bootstrap core JavaScript -->
-	    <script src="/vendor/jquery/jquery.min.js"></script>
-	    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	</body>
+
+<head>
+	<meta charset="utf-8" />
+	<title>UNLa</title>
+	<!-- Bootstrap core CSS -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/css/modern-business.css" rel="stylesheet" />
+	
+</head>
+
+<body>
+	
+	<!-- Page Content -->
+	<div class="container mt-5">
+
+		<div class="card shadow p-4 col-md offset-md-3">
+			<h1 class="h3 mb-4 text-center">Login</h1>
+			<form th:action="@{/loginprocess}" method="post">
+
+				<!-- Campo usuario -->
+				<div class="mb-3">
+					<label for="username" class="form-label">Usuario</label>
+					<input type="text" class="form-control" name="username" id="username" placeholder="Username" />
+				</div>
+				
+				<!-- Campo contraseña-->
+				<div class="mb-3">
+					<input type="password" name="password" id="password" placeholder="Password" />
+				</div>
+
+				<!-- Botón -->
+				<div class="d-grid">
+					<button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+				</div>
+			</form>
+			<div th:if="${error != null}" class="alert alert-danger">
+				Invalid username or password.
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript -->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

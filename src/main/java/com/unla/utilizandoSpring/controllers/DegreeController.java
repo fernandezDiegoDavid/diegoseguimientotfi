@@ -1,6 +1,7 @@
 package com.unla.utilizandoSpring.controllers;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,31 +15,38 @@ import com.unla.utilizandoSpring.helpers.ViewRouteHelper;
 import com.unla.utilizandoSpring.service.IDegreeService;
 
 //@Controller:usado para especificar que la clase es un componente Controller
+
 @Controller
+
 /*
  * @RequestMapping("/degree"):usado para especificar la ruta por la cual se va a
  * acceder a los metodos, por intermedio de la peticion. Normalmente la ruta se
  * llama como el controller,sacando el sufijo
  */
+
 @RequestMapping("/degrees")
 public class DegreeController {
 
 	// Declara el atributo que sera inyectado por Spring en tiempo de ejecucion
+	
 	private IDegreeService degreeService;
 
 	// Inyecta una implemantacion del bean llamado degreeService que impleneta la
 	// interfaz IDegreeService
+	
 	public DegreeController(@Qualifier("degreeService") IDegreeService degreeService) {
 		this.degreeService = degreeService;
 
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("")
+	
 	/* Especifica que se accede al método por intermedio
 	 * de una peticion get ademas la notacion agrega un nombre a la ruta
 	 * para especificar como debe ser esta
 	 */
+	
 	public ModelAndView index() {
 		
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.DEGREE_INDEX);
@@ -52,6 +60,8 @@ public class DegreeController {
 	}
 	
 	@PostMapping("")
+	// El binding @ModelAttribute es lo que convierte automáticamente los valores del formulario en un objeto Java listo para usar.
+	
 	public RedirectView create(@ModelAttribute("degree") DegreeDTO degreeDTO ) {
 	
 	degreeService.insertOrUpdate(degreeDTO);

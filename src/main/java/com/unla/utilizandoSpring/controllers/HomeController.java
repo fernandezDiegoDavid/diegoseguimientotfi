@@ -1,5 +1,7 @@
 package com.unla.utilizandoSpring.controllers;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,8 +48,16 @@ public class HomeController {
 
 	// GET Example: SERVER/index
 	@GetMapping("/index")
-	public String index() {
-		return ViewRouteHelper.INDEX;
+	public ModelAndView index() {
+		
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.INDEX);
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		modelAndView.addObject("username",user.getUsername());
+		
+		
+		return modelAndView;
 	}
 
 	// GET Example: SERVER/hello?name=someName
