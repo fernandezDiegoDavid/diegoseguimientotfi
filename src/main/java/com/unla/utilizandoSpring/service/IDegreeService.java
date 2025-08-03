@@ -9,6 +9,8 @@ public interface IDegreeService {
 	
 	public List<Degree> getAll();
 	
+	public List<DegreeDTO> getallDTO();
+	
 	public DegreeDTO insertOrUpdate(DegreeDTO degreeModel);
 	
 	public boolean remove(int id);

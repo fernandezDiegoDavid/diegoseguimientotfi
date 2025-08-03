@@ -17,6 +17,13 @@ public class DegreeDTO {
 
 	public DegreeDTO() {
 	}
+	
+	public DegreeDTO(int id, String name, String institution, int year) {
+		this.setId(id);
+		this.name = name;
+		this.institucion = institution;
+		this.year = year;
+	}
 
 	public DegreeDTO(String name, String institucion, int year) {
 
