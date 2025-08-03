@@ -17,15 +17,17 @@
 			<button aria-controls="navbarResponsive" aria-expanded="false"
 				aria-label="Toggle navigation"
 				class="navbar-toggler navbar-toggler-right"
-				data-target="#navbarResponsive" data-toggle="collapse" type="button"></button>
+				data-target="#navbarResponsive" data-toggle="collapse" type="button">
+				<span class="navbar-toggler-icon"></span> <!-- Faltaba esto -->
+			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="/degrees/">Degrees</a>
+					<li class="nav-item"><a class="nav-link" href="/degrees">Degrees</a>
 					</li>
 					<li class="nav-item dropdown"><a aria-expanded="false"
 						aria-haspopup="true" class="nav-link dropdown-toggle"
 						data-toggle="dropdown" href="#" id="navbarDropdownBlog"> User
-							<span th:text="${username}" />
+							<span th:text="${username}"></span>
 					</a>
 						<div aria-labelledby="navbarDropdownBlog"
 							class="dropdown-menu dropdown-menu-right">
@@ -95,7 +97,7 @@
 	</div>
 	<footer class="py-5 bg-dark">
 		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Utilizando Spring 2025</p>
+			<p class="m-0 text-center text-white">© UNLa 2025 - Todos los derechos reservados</p>
 		</div>
 	</footer>
 	<!-- Bootstrap core JavaScript -->

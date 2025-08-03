@@ -6,7 +6,7 @@ public class ViewRouteHelper {
 	//home
 	public final static String INDEX = "home/index";
 	public final static String HELLO = "home/hello";
-	public final static String DEGREE = "home/degree";
+	public final static String DEGREE = "home/nuevoDegree";
 	public final static String NEWDEGREE = "home/newDegree";
 	
 	//Redirects
