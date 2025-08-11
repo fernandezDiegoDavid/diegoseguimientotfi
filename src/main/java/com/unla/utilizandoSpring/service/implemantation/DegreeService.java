@@ -1,6 +1,7 @@
 package com.unla.utilizandoSpring.service.implemantation;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,41 +17,60 @@ public class DegreeService implements IDegreeService {
 
 	// Declara el atributo que sera inyectado por Spring en tiempo de ejecucion
 	private IDegreeRepository degreeRepository;
-	
+
 	private ModelMapper modelMapper;
-	
-	// // Inyecta una implemantacion del bean llamado degreeRepository que impleneta la interfaz IDegreeRepository
-	public DegreeService(@Qualifier("degreeRepository") IDegreeRepository degreeRepository,ModelMapper modelMApper) {
+
+	// // Inyecta una implemantacion del bean llamado degreeRepository que impleneta
+	// la interfaz IDegreeRepository
+	public DegreeService(@Qualifier("degreeRepository") IDegreeRepository degreeRepository, ModelMapper modelMApper) {
 		this.degreeRepository = degreeRepository;
 		this.modelMapper = modelMApper;
 	}
-	
+
 	@Override
-	public List<Degree> getAll(){
+	public List<Degree> getAll() {
 		return degreeRepository.findAll();
-		
-		 /* List<Degree> degrees = degreeRepository.findAll();
-		    return degrees.stream()
-		                  .map(degree -> modelMapper.map(degree, DegreeModel.class))
-		                  .collect(Collectors.toList());
-		  */
-		
+
+		/*
+		 * List<Degree> degrees = degreeRepository.findAll(); return degrees.stream()
+		 * .map(degree -> modelMapper.map(degree, DegreeModel.class))
+		 * .collect(Collectors.toList());
+		 */
+
 	}
-	
+
+	@Override
+	public List<DegreeDTO> getallDTO() {
+		// return degreeRepository.findAll();
+
+		List<Degree> degrees = degreeRepository.findAll();
+
+		return degrees.stream().map(degree -> modelMapper.map(degree, DegreeDTO.class)).collect(Collectors.toList());
+		/*
+		 * List<DegreeDTO> dtoList = new ArrayList<>(); 
+		 * for (Degree degree : degrees) {
+		 * DegreeDTO dto = modelMapper.map(degree, DegreeDTO.class); 
+		 * dtoList.add(dto); 
+		 * }
+		 * return dtoList;
+		 */
+
+	}
+
 	@Override
 	public DegreeDTO insertOrUpdate(DegreeDTO degreeModel) {
 		Degree degree = degreeRepository.save(modelMapper.map(degreeModel, Degree.class));
 		return modelMapper.map(degree, DegreeDTO.class);
 	}
-	
+
 	@Override
 	public boolean remove(int id) {
 		try {
 			degreeRepository.deleteById(id);
 			return true;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
-	
+
 }
