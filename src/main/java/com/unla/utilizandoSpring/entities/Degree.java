@@ -7,9 +7,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +32,11 @@ public class Degree {
 	@Column(name="year")
 	private int year;
 	
+	// muchos degre pueden ser una persona
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="person_id", nullable = true)
+	private Person person;
+	
 	@Column(name="createdat", columnDefinition = "DATETIME")
 	@CreationTimestamp
 	private LocalDateTime createAt;
@@ -38,6 +46,19 @@ public class Degree {
 	private LocalDateTime updateAt;
 	
 	public Degree() {}
+	
+	public Degree(int id, String name, String institution,int year) {
+		this.id = id;
+		this.name = name;
+		this.institution = institution;
+		this.year = year;
+	}
+	
+	public Degree(String name, String institution, int year) {
+		this.name = name;
+		this.institution = institution;
+		this.year = year;
+	}
 
 	public int getId() {
 		return id;

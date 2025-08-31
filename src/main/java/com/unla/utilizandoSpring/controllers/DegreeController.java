@@ -3,6 +3,8 @@ package com.unla.utilizandoSpring.controllers;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,8 @@ import com.unla.utilizandoSpring.dtos.DegreeDTO;
 import com.unla.utilizandoSpring.helpers.ViewRouteHelper;
 import com.unla.utilizandoSpring.service.IDegreeService;
 
+import jakarta.validation.Valid;
+
 //@Controller:usado para especificar que la clase es un componente Controller
 
 @Controller
@@ -24,6 +28,7 @@ import com.unla.utilizandoSpring.service.IDegreeService;
  * llama como el controller,sacando el sufijo
  */
 
+@PreAuthorize("hasRole('ROLE_ADMIN')") // para acceder a este controlador se debe poseer el rol admin
 @RequestMapping("/degrees")
 public class DegreeController {
 
@@ -39,14 +44,11 @@ public class DegreeController {
 
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("")
-	
 	/* Especifica que se accede al método por intermedio
 	 * de una peticion get ademas la notacion agrega un nombre a la ruta
 	 * para especificar como debe ser esta
 	 */
-	
+	@GetMapping("")
 	public ModelAndView index() {
 		
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.DEGREE_INDEX);
@@ -59,14 +61,38 @@ public class DegreeController {
 		
 	}
 	
+
+	
 	@PostMapping("")
-	// El binding @ModelAttribute es lo que convierte automáticamente los valores del formulario en un objeto Java listo para usar.
-	
 	public RedirectView create(@ModelAttribute("degree") DegreeDTO degreeDTO ) {
-	
+	// El binding @ModelAttribute es lo que convierte automáticamente los valores del formulario en un objeto Java listo para usar.
+		
 	degreeService.insertOrUpdate(degreeDTO);
 	
 	return new RedirectView(ViewRouteHelper.ROOT);
+	}
+	
+	@GetMapping("/form")
+	public String degree(Model model) {
+		//Model model, sirve para pasar datos del controlador a la vista
+		model.addAttribute("degree", new DegreeDTO());
+		return ViewRouteHelper.DEGREE;
+	}
+
+	@PostMapping("/newdegree")
+	public ModelAndView newdegree(@Valid @ModelAttribute("degree") DegreeDTO degree, BindingResult bindingResult) {
+		
+		ModelAndView mV = new ModelAndView();
+		
+		if (bindingResult.hasErrors()) {
+			mV.setViewName(ViewRouteHelper.DEGREE);
+		} else {
+			mV.setViewName(ViewRouteHelper.NEWDEGREE);
+		}
+		
+		mV.addObject("degree", degree);
+		
+		return mV;
 	}
 
 }
