@@ -3,47 +3,24 @@ package com.unla.utilizandoSpring.controllers;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.unla.utilizandoSpring.dtos.DegreeDTO;
 import com.unla.utilizandoSpring.helpers.ViewRouteHelper;
-
-import jakarta.validation.Valid;
+import com.unla.utilizandoSpring.service.IPersonService;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
-
-	@GetMapping("/degree")
-	public String degree(Model model) {
-		//Model model, sirve para pasar datos del controlador a la vista
-		model.addAttribute("degree", new DegreeDTO());
-		return ViewRouteHelper.DEGREE;
-	}
-
-	@PostMapping("/newdegree")
-	public ModelAndView newdegree(@Valid @ModelAttribute("degree") DegreeDTO degree, BindingResult bindingResult) {
-		
-		ModelAndView mV = new ModelAndView();
-		
-		if (bindingResult.hasErrors()) {
-			mV.setViewName(ViewRouteHelper.DEGREE);
-		} else {
-			mV.setViewName(ViewRouteHelper.NEWDEGREE);
-		}
-		
-		mV.addObject("degree", degree);
-		
-		return mV;
+	
+	private IPersonService personService;
+	
+	public HomeController(IPersonService personService) {
+		this.personService = personService;
 	}
 
 	// GET Example: SERVER/index
@@ -55,7 +32,7 @@ public class HomeController {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		modelAndView.addObject("username",user.getUsername());
-		
+		modelAndView.addObject("persons", personService.getAll());
 		
 		return modelAndView;
 	}
@@ -84,7 +61,7 @@ public class HomeController {
 	public ModelAndView helloparam2(@PathVariable("name") String nombre) {
 
 		ModelAndView mV = new ModelAndView(ViewRouteHelper.HELLO);
-		// el identificador entre comillas sebe ser el mismo en utilizado en la vista
+		// el identificador entre comillas debe ser el mismo en utilizado en la vista
 		// al utilizar la misma vista que el caso de uso anterior se llanam igual
 		// el parametro pasado como argumento debe ser el mismo que el que se declaro en
 		// la firma del metodo
