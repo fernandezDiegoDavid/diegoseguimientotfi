@@ -32,7 +32,7 @@ public class Degree {
 	@Column(name="year")
 	private int year;
 	
-	// muchos degre pueden ser una persona
+	// muchos degree pueden ser de una persona
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="person_id", nullable = true)
 	private Person person;

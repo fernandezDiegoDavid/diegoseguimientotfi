@@ -2,12 +2,20 @@
 	<thead>
 		<tr> <!-- -->
 			<th>Name</th>
+			<th>Degrees</th>
 			<th>View</th>
 		</tr>
 	</thead>
 	<tbody> <!-- Cuerpo de la tabla -->
 		<tr th:each="person : ${persons}"> <!-- fila -->
 			<td><span th:text="${person.name}" /></td> <!-- dato de la celda, una columna -->
+			<td>
+				<ul>
+					<li th:each="degree : ${person.degrees}"
+					    th:text="${degree.name}" ></li>
+				</ul>
+				<span th:if="${#lists.isEmpty(person.degrees)}">No titles</span>
+			</td>
 			<td> 
 				<a th:href="@{/person/{id}(id=${person.id})}">View</a>
 			</td>

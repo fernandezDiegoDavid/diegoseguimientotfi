@@ -11,7 +11,7 @@ import com.unla.utilizandoSpring.entities.Person;
 import java.util.List;
 
 
-@Repository
+@Repository("personRepository")
 public interface IPersonRepository extends JpaRepository<Person, Serializable> {
 
 	public abstract Optional<Person> findById(int id);
