@@ -15,50 +15,86 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entidad que representa un título académico o grado (Degree).
+ * 
+ * Almacena información sobre estudios realizados, la institución otorgante y el
+ * año de obtención. Se vincula con una {@link Person} mediante una relación de
+ * muchos a uno.
+ */
 @Entity
-@Table(name="degree")
+@Table(name = "degree")
 public class Degree {
-	
+
+	/** Identificador único del título académico. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="name")
+
+	/** Nombre del título o carrera (ej: "Licenciatura en Sistemas"). */
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="institution")
+
+	/** Nombre de la institución o universidad que otorga el título. */
+	@Column(name = "institution")
 	private String institution;
-	
-	@Column(name="year")
+
+	/** Año en el que se completó u obtuvo el grado. */
+	@Column(name = "year")
 	private int year;
-	
+
+	/**
+	 * Persona a la que pertenece este título. La relación es opcional (nullable =
+	 * true) y utiliza carga perezosa (LAZY).
+	 */
 	// muchos degree pueden ser de una persona
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="person_id", nullable = true)
+	@JoinColumn(name = "person_id", nullable = true)
 	private Person person;
-	
-	@Column(name="createdat", columnDefinition = "DATETIME")
+
+	/** Fecha y hora de registro del título en el sistema. */
+	@Column(name = "createdat", columnDefinition = "DATETIME")
 	@CreationTimestamp
 	private LocalDateTime createAt;
-	
-	@Column(name="updatedat", columnDefinition = "DATETIME")
+
+	/** Fecha y hora de la última modificación de los datos del título. */
+	@Column(name = "updatedat", columnDefinition = "DATETIME")
 	@UpdateTimestamp
 	private LocalDateTime updateAt;
-	
-	public Degree() {}
-	
-	public Degree(int id, String name, String institution,int year) {
+
+	/** Constructor por defecto requerido por JPA. */
+	public Degree() {
+	}
+
+	/**
+	 * Constructor para inicializar un título con ID (útil para actualizaciones).
+	 * 
+	 * @param id          Identificador único.
+	 * @param name        Nombre del título.
+	 * @param institution Entidad académica.
+	 * @param year        Año de egreso.
+	 */
+	public Degree(int id, String name, String institution, int year) {
 		this.id = id;
 		this.name = name;
 		this.institution = institution;
 		this.year = year;
 	}
-	
+
+	/**
+	 * Constructor para la creación de nuevos títulos sin ID asignado.
+	 * 
+	 * @param name        Nombre del título.
+	 * @param institution Entidad académica.
+	 * @param year        Año de egreso.
+	 */
 	public Degree(String name, String institution, int year) {
 		this.name = name;
 		this.institution = institution;
 		this.year = year;
 	}
+
+	// --- Getters y Setters ---
 
 	public int getId() {
 		return id;
@@ -107,8 +143,5 @@ public class Degree {
 	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;
 	}
-	
-	
-	
 
 }

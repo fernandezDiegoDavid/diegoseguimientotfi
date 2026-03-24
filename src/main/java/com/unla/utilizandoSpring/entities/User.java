@@ -15,47 +15,90 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+/**
+ * Entidad que representa a un usuario dentro del sistema de seguridad. Almacena
+ * las credenciales de acceso, el estado de la cuenta y sus auditorías.
+ * 
+ * @author Fernandez Diego
+ * @version 1.0
+ */
 
 @Entity
 public class User {
-
+	/** Identificador único autoincremental en la base de datos. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="username", unique=true, nullable=false, length=45)
+	/**
+	 * Nombre de usuario único utilizado para el inicio de sesión. Máximo 45
+	 * caracteres.
+	 */
+	@Column(name = "username", unique = true, nullable = false, length = 45)
 	private String username;
 
-	@Column(name="password", nullable=false, length=60)
+	/** Contraseña encriptada (BCryp ) del usuario. */
+	@Column(name = "password", nullable = false, length = 60)
 	private String password;
 
+	/** Indica si el usuario está aactivo o ha sido deshabilitado para el acceso. */
 	private boolean enabled;
 
-	@Column(name="createdat", columnDefinition = "DATETIME")
+	/**
+	 * Fecha y hora de creación del registro. Se genera automáticamente al insertar.
+	 */
+	@Column(name = "createdat", columnDefinition = "DATETIME")
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
-	@Column(name="updatedat", columnDefinition = "DATETIME")
+	/**
+	 * Fecha y hora de la última actualización. Se actualiza automáticamente en cada
+	 * modificación.
+	 */
+	@Column(name = "updatedat", columnDefinition = "DATETIME")
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+	/**
+	 * Colección de roles asociados al usuario. Se cargan de forma diferida (LAZY)
+	 * para optimizar el rendimiento.
+	 */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<UserRole> userRoles = new HashSet<>();
 
+	// --- Constructores ---
+
+	/**
+	 * Crea un usuario con los datos básicos de acceso.
+	 * 
+	 * @param username El nombre de usuario.
+	 * @param password La contraseña (debe venir ya encriptada).
+	 * @param enabled  El estado inicial de la cuenta.
+	 */
 	public User(String username, String password, boolean enabled) {
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 	}
 
+	/**
+	 * Constructor completo incluyendo la asignación inicial de roles.
+	 * 
+	 * @param username  El nombre de usuario.
+	 * @param password  La contraseña.
+	 * @param enabled   El estado.
+	 * @param userRoles Conjunto de roles iniciales.
+	 */
 	public User(String username, String password, boolean enabled, Set<UserRole> userRoles) {
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 		this.userRoles = userRoles;
 	}
-	
-	public User() {}
+
+	/** Constructor vacío requerido por JPA. */
+	public User() {
+	}
 
 	public int getId() {
 		return id;
@@ -112,6 +155,5 @@ public class User {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	
-	
+
 }
