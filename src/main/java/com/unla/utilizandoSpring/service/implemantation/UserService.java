@@ -73,6 +73,14 @@ public class UserService implements UserDetailsService {
 		// UserDetails.
 	}
 
+	/**
+	 * Adapta los datos de la entidad de negocio al objeto de seguridad de Spring.
+	 * 
+	 * @param user               Entidad del modelo de datos.
+	 * @param grantedAuthorities Lista de permisos/roles ya procesados.
+	 * @return Objeto {@link User} (Spring Security) con estados de cuenta por
+	 *         defecto en true.
+	 */
 	private User buildUser(com.unla.utilizandoSpring.entities.User user, List<GrantedAuthority> grantedAuthorities) {
 		return new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, // accountNonExpired,
 																									// credentialsNonExpired,
@@ -80,6 +88,17 @@ public class UserService implements UserDetailsService {
 				grantedAuthorities);
 	}
 
+	/**
+	 * Convierte la colección de {@link UserRole} en una lista de
+	 * {@link GrantedAuthority}.
+	 * <p>
+	 * Este proceso es necesario para que Spring Security reconozca los permisos del
+	 * usuario durante la fase de autorización.
+	 * </p>
+	 * 
+	 * @param userRoles Conjunto de roles obtenidos de la base de datos.
+	 * @return Lista de autoridades compatibles con el framework.
+	 */
 	private List<GrantedAuthority> buildGrantedAuthorities(Set<UserRole> userRoles) {
 		// Recorre los roles del usuario (UserRole).
 		// Los convierte a GrantedAuthority, que es lo que Spring Security usa para
