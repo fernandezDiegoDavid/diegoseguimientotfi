@@ -49,20 +49,8 @@ public class UserController {
 			@RequestParam(name = "logout", required = false) String logout) {
 		// Toma parámetros que vienen en la URL (como ?error=true).
 		model.addAttribute("error", error);
-		// Agrega datos que podés mostrar en el HTML con ${...}.
 		model.addAttribute("logout", logout);
 		return ViewRouteHelper.USER_LOGIN;
-	}
-
-	/**
-	 * Renderiza la vista de confirmación tras el cierre de sesión.
-	 * 
-	 * @param model Objeto para el pasaje de datos a la vista.
-	 * @return La vista configurada en {@link ViewRouteHelper#USER_LOGOUT}.
-	 */
-	@GetMapping("/logout")
-	public String logout(Model model) {
-		return ViewRouteHelper.USER_LOGOUT;
 	}
 
 	/**

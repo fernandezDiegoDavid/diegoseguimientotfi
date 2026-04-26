@@ -78,7 +78,7 @@ public class SecurityConfiguration {
 					login.permitAll(); // Permite acceder al login sin login
 				}).logout(logout -> {
 					logout.logoutUrl("/logout"); // Ruta para cerrar sesión
-					logout.logoutSuccessUrl("/login"); // A dónde redirigir tras logout exitoso
+					logout.logoutSuccessUrl("/login?logout"); // Redirige al login y marca logout exitoso
 					logout.permitAll(); // Cualquiera puede acceder a /logout sin autentidicación
 				}).build(); // Compila toda la configuración en una SEcurityFilterChain, que es la forma
 							// moderna de configurar Spring Security
