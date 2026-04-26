@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- Declara HTML5 para que el navegador use el estandar moderno -->
+<html lang="en">
+
+<head>
+	<!-- head contiene metadatos y recursos (no contenido visible principal) -->
+	<meta charset="utf-8" />
+	<!-- Hace que el layout responsive respete el ancho real del dispositivo -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- Titulo que aparece en la pestana del navegador -->
+	<title>UNLa | Login</title>
+	<!-- Carga Bootstrap 4 local: define componentes y utilidades CSS -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- CSS del tema del proyecto (ajustes visuales extra sobre Bootstrap) -->
+	<link href="/css/modern-business.css" rel="stylesheet" />
+
+</head>
+
+
+<body class="bg-light">
+	<!-- body contiene todo lo visible en pantalla -->
+	<!-- bg-light aplica fondo claro desde Bootstrap -->
+
+	<!--
+	Estructura general del login:
+	- container: limita el ancho y centra el contenido.
+	- row / col: construyen el layout responsive de Bootstrap.
+	- card: agrupa visualmente el formulario.
+	- form-group / form-control: estilizan cada campo del formulario.
+	-->
+
+	<!-- Bloque raiz del contenido -->
+	<div class="container">
+		<!--
+		row: crea una fila de la grilla (12 columnas virtuales)
+		justify-content-center: centra horizontalmente las columnas hijas
+		mt-5: margen superior para bajar el login
+		-->
+		<div class="row justify-content-center mt-5">
+			<!--
+			col-*: ancho responsive de la unica columna del login
+			- col-12: 100% en pantallas chicas
+			- col-sm-10 / md-7 / lg-5 / xl-4: se vuelve mas angosta en pantallas grandes
+			-->
+			<div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+				<!-- card: contenedor visual del formulario; shadow-sm agrega relieve -->
+				<div class="card shadow-sm">
+					<!-- card-body: zona interna de contenido; p-4 agrega padding -->
+					<div class="card-body p-4">
+						<!-- h1 es el titulo principal de esta vista -->
+						<h1 class="h3 mb-4 text-center">Login</h1>
+						<!-- th:if renderiza este aviso cuando la URL llega con ?logout -->
+						<div th:if="${logout != null}" class="alert alert-success" role="alert">
+							Sesion cerrada correctamente.
+						</div>
+						<!--
+						form agrupa controles y envia datos al servidor
+						th:action (Thymeleaf) resuelve la URL /loginprocess
+						method="post" envia credenciales en el cuerpo del request
+						-->
+						<form th:action="@{/loginprocess}" method="post">
+
+							<!-- Campo de usuario -->
+							<!-- form-group agrupa label + input como un bloque del formulario -->
+							<div class="form-group">
+								<!-- label describe el campo; for referencia al id del input -->
+								<label for="username">Usuario</label>
+								<!--
+								input type="text": campo de texto simple
+								class="form-control": estilo Bootstrap para inputs
+								name="username": nombre de parametro enviado al backend
+								id="username": identificador unico para label/JS/CSS
+								placeholder: texto de ayuda visual
+								-->
+								<input type="text" class="form-control" name="username" id="username"
+									placeholder="Ingrese su usuario" />
+							</div>
+
+							<!-- Campo de contraseña -->
+							<div class="form-group">
+								<!-- label + for enlazado al input password por su id -->
+								<label for="password">Contraseña</label>
+								<!-- type="password" oculta los caracteres ingresados -->
+								<input type="password" class="form-control" name="password" id="password"
+									placeholder="Ingrese su contraseña" />
+							</div>
+
+							<!-- Botón principal -->
+							<!-- button type="submit" dispara el envio del form -->
+							<button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+						</form>
+
+						<!-- Mensaje de error cuando el login falla -->
+						<!-- th:if renderiza este div solo si existe la variable error -->
+						<div th:if="${error != null}" class="alert alert-danger mt-3 mb-0">
+							Invalid username or password.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery (dependencia de Bootstrap 4 JS) -->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<!-- Bootstrap JS (interacciones: dropdown, modal, collapse, etc.) -->
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

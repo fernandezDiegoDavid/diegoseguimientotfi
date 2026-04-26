@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Vista para crear un Degree con una estetica similar a person/new.html -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Degree | New</title>
+	<!-- Bootstrap local -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/css/modern-business.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light">
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6">
+				<div class="card shadow-sm">
+					<div class="card-body p-4">
+						<h1 class="h4 mb-4">Agregar Degree</h1>
+
+						<!--
+						th:object="${degree}": objeto base del formulario.
+						El controlador GET /degrees/form carga este objeto en el modelo.
+						th:action="@{/degrees/newdegree}": endpoint POST que valida el alta.
+						-->
+						<form action="#" th:action="@{/degrees/newdegree}" th:object="${degree}" method="post">
+
+							<div class="form-group">
+								<label for="name">Nombre</label>
+								<!-- th:field="*{name}" enlaza este input con degree.name. -->
+								<input id="name" type="text" class="form-control" th:field="*{name}"
+									placeholder="Ingrese nombre" />
+							</div>
+
+							<div class="form-group">
+								<label for="institucion">Institucion</label>
+								<!-- th:field="*{institucion}" enlaza con degree.institucion. -->
+								<input id="institucion" type="text" class="form-control" th:field="*{institucion}"
+									placeholder="Ingrese institucion" />
+								<div class="text-danger mt-1" th:if="${#fields.hasErrors('institucion')}"
+									th:errors="*{institucion}"></div>
+							</div>
+
+							<div class="form-group">
+								<label for="year">Año</label>
+								<!-- th:field="*{year}" enlaza con degree.year. -->
+								<input id="year" type="text" class="form-control" th:field="*{year}"
+									placeholder="Ingrese año" />
+								<div class="text-danger mt-1" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-block">Crear</button>
+						</form>
+
+						<!-- Enlace de navegacion para volver al listado de degrees -->
+						<a class="btn btn-link btn-block mt-3" href="/degrees">Volver al listado</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- Vista para crear una nueva persona -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Person | New</title>
+	<!-- Bootstrap local -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/css/modern-business.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light">
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6">
+				<div class="card shadow-sm">
+					<div class="card-body p-4">
+						<h1 class="h4 mb-4">Crear persona</h1>
+
+						<!--
+						th:object="${person}": objeto base del formulario.
+						El controlador GET /person/new carga este objeto en el modelo.
+						th:action="@{/person/create}": endpoint POST que persiste la persona.
+						-->
+						<form action="#" th:action="@{/person/create}" th:object="${person}" method="post">
+
+							<div class="form-group">
+								<label for="name">Nombre</label>
+								<!--
+								th:field="*{name}" enlaza este input con person.name.
+								*{...} significa "propiedad del th:object actual".
+								-->
+								<input id="name" type="text" class="form-control" th:field="*{name}"
+									placeholder="Ingrese nombre" />
+							</div>
+
+							<div class="form-group">
+								<label for="birthdate">Fecha de nacimiento</label>
+								<!--
+								input type="date": control de fecha nativo del navegador.
+								th:field="*{birthdate}" enlaza con person.birthdate.
+								-->
+								<input id="birthdate" type="date" class="form-control" th:field="*{birthdate}" />
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-block">Crear</button>
+						</form>
+
+						<!-- a: enlace de navegación para volver al índice de personas -->
+						<a class="btn btn-link btn-block mt-3" href="/person">Volver al listado</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

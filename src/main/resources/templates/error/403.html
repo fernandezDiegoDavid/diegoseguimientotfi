@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--
+Vista de error 403 (acceso denegado).
+Se muestra cuando el usuario no tiene permisos suficientes para entrar a un recurso.
+-->
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Error 403 - Acceso Denegado | UNLa</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- Bootstrap y estilos locales del proyecto -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/css/modern-business.css" rel="stylesheet" />
+	<style>
+		/*
+		Estilos puntuales de esta vista:
+		centrado del mensaje y tamaño destacado del código de error.
+		*/
+		.error-container {
+			text-align: center;
+			padding: 100px 20px;
+		}
+
+		.error-code {
+			font-size: 120px;
+			font-weight: bold;
+			color: #dc3545;
+		}
+
+		.error-message {
+			font-size: 24px;
+			margin-bottom: 20px;
+		}
+
+		.btn-home {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<!--
+	Navbar superior reutilizada para mantener consistencia visual del sitio.
+	Incluye accesos rápidos y menú de usuario.
+	-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/index">UNLa</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/degrees/">Degrees</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							User
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+							<form th:action="@{/logout}" method="post">
+								<input class="dropdown-item" type="submit" value="Logout" />
+							</form>
+							<a class="dropdown-item" href="#">Example</a>
+							<a class="dropdown-item" href="#">Example 2</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<!--
+	Contenido principal del error:
+	- error-code: muestra el código HTTP.
+	- error-message: explica al usuario por qué no accede.
+	- botón de retorno al inicio para mejorar navegación.
+	-->
+	<div class="container error-container">
+		<div class="error-code">403</div>
+		<div class="error-message">No tenés permiso para acceder a esta página.</div>
+		<a href="/index" class="btn btn-primary btn-home">Volver al Inicio</a>
+	</div>
+
+	<!-- Footer institucional -->
+	<footer class="py-4 bg-dark">
+		<div class="container">
+			<p class="m-0 text-center text-white">© UNLa 2025 - Todos los derechos reservados</p>
+		</div>
+	</footer>
+
+	<!-- Scripts locales de jQuery + Bootstrap -->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

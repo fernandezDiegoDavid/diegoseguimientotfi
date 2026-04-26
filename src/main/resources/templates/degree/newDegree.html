@@ -1,0 +1,32 @@
+<!--
+Fragmento de confirmación de alta de Degree.
+Se puede renderizar como bloque independiente dentro de una vista mayor.
+-->
+<div class="col-12 col-md-8 col-lg-6 mx-auto">
+	<!--
+	card: contenedor visual del resumen cargado.
+	shadow-sm: sombra suave para separar del fondo.
+	th:object define el objeto base del fragmento (degree).
+	-->
+	<div class="card shadow-sm" th:object="${degree}">
+		<!-- card-header con el título dinámico del degree -->
+		<h4 class="card-header" th:text="*{name}">Degree name</h4>
+
+		<div class="card-body">
+			<!-- Texto descriptivo del bloque -->
+			<p class="card-text mb-3">Resumen del título académico registrado.</p>
+
+			<!-- th:text imprime los datos dinámicos del objeto degree -->
+			<p class="mb-1"><strong>Institution:</strong> <span th:text="*{institucion}">Institution</span></p>
+			<p class="mb-0"><strong>Year:</strong> <span th:text="*{year}">0</span></p>
+		</div>
+
+		<div class="card-footer bg-white">
+			<!--
+			Enlace de navegación para volver al listado principal de degrees.
+			btn-sm y btn-outline-primary conservan estilo visual consistente.
+			-->
+			<a class="btn btn-outline-primary btn-sm" th:href="@{/degrees}">Volver al listado</a>
+		</div>
+	</div>
+</div>
