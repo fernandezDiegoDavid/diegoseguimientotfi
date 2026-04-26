@@ -1,38 +1,48 @@
 <!DOCTYPE html>
+<!-- Documento HTML5 -->
 <html lang="en">
-	
+
 <head>
+	<!-- Metadatos del documento -->
 	<meta charset="utf-8" />
+	<!-- Habilita diseño responsive en mobile -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>UNLa</title>
-	<!-- Bootstrap core CSS -->
+	<!-- Bootstrap 4 local (grilla, navbar, dropdown, utilidades) -->
 	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<!-- Custom styles for this template -->
+	<!-- Estilos del tema del proyecto -->
 	<link href="/css/modern-business.css" rel="stylesheet" />
 </head>
 
 <body>
-	<!-- Navigation -->
-	<nav
-		class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<!-- Navbar Bootstrap: navegación principal -->
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<!-- container centra y limita el ancho -->
 		<div class="container">
+			<!-- Enlace normal (href) a la ruta /index -->
 			<a class="navbar-brand" href="/index">HOME</a>
+			<!-- Botón hamburguesa para pantallas chicas -->
 			<button aria-controls="navbarResponsive" aria-expanded="false"
 				aria-label="Toggle navigation"
 				class="navbar-toggler navbar-toggler-right"
 				data-target="#navbarResponsive" data-toggle="collapse" type="button">
-				<span class="navbar-toggler-icon"></span> <!-- Faltaba esto -->
+				<span class="navbar-toggler-icon"></span>
 			</button>
+			<!-- Menú colapsable de la navbar -->
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="/degrees">Degrees</a>
 					</li>
+					<!-- Dropdown de usuario -->
 					<li class="nav-item dropdown"><a aria-expanded="false"
 						aria-haspopup="true" class="nav-link dropdown-toggle"
 						data-toggle="dropdown" href="#" id="navbarDropdownBlog"> User
+							<!-- th:text: Thymeleaf reemplaza este contenido con el username -->
 							<span th:text="${username}"></span>
 					</a>
 						<div aria-labelledby="navbarDropdownBlog"
 							class="dropdown-menu dropdown-menu-right">
+							<!-- th:action genera la URL /logout y POST ejecuta logout de Spring Security -->
 							<form th:action="@{/logout}" method="post">
 								<input class="dropdown-item" style="cursor: pointer"
 									type="submit" value="Logout" />
@@ -43,82 +53,54 @@
 			</div>
 		</div>
 	</nav>
-	<header>
-		<div class="carousel slide" data-ride="carousel"
-			id="carouselExampleIndicators">
-			<ol class="carousel-indicators">
-				<li class="active" data-slide-to="0"
-					data-target="#carouselExampleIndicators">&nbsp;</li>
-				<li data-slide-to="1" data-target="#carouselExampleIndicators">&nbsp;</li>
-				<li data-slide-to="2" data-target="#carouselExampleIndicators">&nbsp;</li>
-			</ol>
-			<div class="carousel-inner" role="listbox">
-				<!-- Slide One - Set the background image for this slide in the line below -->
-				<div class="carousel-item active"
-					style="background-image: url('http://placehold.it/1900x1080')">
-					<div class="carousel-caption d-none d-md-block">
-						<h3>First Slide</h3>
-						<p>This is a description for the first slide.</p>
-					</div>
-				</div>
-				<!-- Slide Two - Set the background image for this slide in the line below -->
-				<div class="carousel-item"
-					style="background-image: url('http://placehold.it/1900x1080')">
-					<div class="carousel-caption d-none d-md-block">
-						<h3>Second Slide</h3>
-						<p>This is a description for the second slide.</p>
-					</div>
-				</div>
-				<!-- Slide Three - Set the background image for this slide in the line below -->
-				<div class="carousel-item"
-					style="background-image: url('http://placehold.it/1900x1080')">
-					<div class="carousel-caption d-none d-md-block">
-						<h3>Third Slide</h3>
-						<p>This is a description for the third slide.</p>
-					</div>
-				</div>
-			</div>
-			<a class="carousel-control-prev" data-slide="prev"
-				href="#carouselExampleIndicators" role="button"><span
-				class="sr-only">Previous</span> </a> <a class="carousel-control-next"
-				data-slide="next" href="#carouselExampleIndicators" role="button">
-				<span class="sr-only">Next</span>
-			</a>
-		</div>
-	</header>
-	<!-- Page Content -->
+
+	<!-- Contenido principal -->
 	<div class="container">
+		<!-- my-2 aplica margen vertical con utilidades Bootstrap -->
 		<h1 class="my-2">Vistas de personas</h1>
+		<!--
+		select: lista desplegable HTML.
+		id="select-person": identificador usado por jQuery para capturar el cambio.
+		-->
 		<select class="my-4" id="select-person">
 			<option>...</option>
-			<option th:each="person : ${persons}" th:value="${person.id}">
-				<p th:text="${person.name}"/>
-			</option>
+			<!--
+			th:each recorre la colección persons.
+			th:value asigna el id de cada persona como valor de la opción.
+			th:text escribe el nombre visible.
+			-->
+			<option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.name}"></option>
 		</select>
+		<!--
+		row: contenedor de grilla Bootstrap.
+		Aquí se inserta dinámicamente el HTML parcial devuelto por AJAX.
+		-->
 		<div id="div-select-person" class="row"></div>
 	</div>
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">© UNLa 2025 - Todos los derechos reservados</p>
-		</div>
-	</footer>
-	<!-- Bootstrap core JavaScript -->
+
+	<!-- Librerías JS locales -->
 	<script src="/vendor/jquery/jquery.min.js"></script>
 	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript">
+		// 1) Escucha el evento change del select.
 		$("#select-person").change(function() {
+			// 2) Toma el valor seleccionado.
 			var personId = $("#select-person").val();
 			if($.isNumeric(personId)){
-				$.ajax({ //https://api.jquery.com/jquery.ajax/ => Examples:
+				// 3) Hace una petición AJAX GET al backend.
+				$.ajax({
 					method: "GET",
 				 	url: "/person/partial/" + personId,
 				})
+				// 4) Si responde OK, inyecta el HTML recibido dentro del div destino.
 				.done(function(result) {
 					$("#div-select-person").html(result);
 				})
+				// 5) Si falla la petición, muestra error simple.
 				.fail(function() {
 					alert("error");
 				});
+			// Si no hay valor válido, limpia el contenedor.
 			}else $("#div-select-person").html("");
 		});
 	</script>

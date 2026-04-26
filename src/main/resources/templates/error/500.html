@@ -1,20 +1,28 @@
 <!DOCTYPE html>
+<!--
+Vista de error 500 (error interno del servidor).
+Se muestra cuando ocurre una excepción no controlada o falla del backend.
+-->
 <html lang="en">
 
 <head>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>UNLa</title>
 
 
 
-	<!-- Bootstrap core CSS -->
+	<!-- Bootstrap y estilos locales del proyecto -->
 	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<!-- Custom styles for this template -->
+	<!-- Hoja de estilos principal del sitio -->
 	<link href="/css/modern-business.css" rel="stylesheet" />
 </head>
 
 <body>
-	<!-- Navigation -->
+	<!--
+	Navbar superior reutilizada para mantener la navegación del sitio.
+	Incluye accesos a módulos y menú de usuario.
+	-->
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="/index">HOME</a>
@@ -42,7 +50,12 @@
 		</div>
 	</nav>
 
-	<!-- Page Content -->
+	<!--
+	Contenido principal del error:
+	- Encabezado con código 500 y descripción.
+	- Breadcrumb para referencia de navegación.
+	- Jumbotron con código destacado para feedback visual.
+	-->
 	<div class="container">
 		<!-- Page Heading/Breadcrumbs -->
 		<h1 class="mt-4 mb-3">500
@@ -60,14 +73,14 @@
 		<!-- /.jumbotron -->
 	</div>
 	<!-- /.container -->
-	<!-- Footer -->
+	<!-- Footer institucional -->
 	<footer class="py-5 bg-dark">
 		<div class="container">
 			<p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
 		</div>
 		<!-- /.container -->
 	</footer>
-	<!-- Bootstrap core JavaScript -->
+	<!-- Scripts locales de jQuery + Bootstrap -->
 	<script src="/vendor/jquery/jquery.min.js"></script>
 	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>

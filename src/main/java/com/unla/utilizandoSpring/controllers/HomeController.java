@@ -13,38 +13,72 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.unla.utilizandoSpring.helpers.ViewRouteHelper;
 import com.unla.utilizandoSpring.service.IPersonService;
 
+/**
+ * Controlador principal de la aplicación.
+ * <p>
+ * Gestiona las rutas base, la página de inicio (index) y ejemplos de pasaje de
+ * parámetros a través de peticiones GET.
+ * </p>
+ * <p>
+ * <strong>Nota técnica:</strong> Actúa como el punto de entrada
+ * post-autenticación. Utiliza el SecurityContext de Spring para recuperar los
+ * detalles del usuario actualmente logueado, demostrando la integración entre
+ * la capa de seguridad y la capa de presentación.
+ * </p>
+ */
 @Controller
 @RequestMapping("/")
 public class HomeController {
-	
+
 	private IPersonService personService;
-	
+
+	/**
+	 * Constructor para inyección de dependencias.
+	 * 
+	 * @param personService Servicio para gestionar la lógica de personas.
+	 */
 	public HomeController(IPersonService personService) {
 		this.personService = personService;
 	}
 
+	/**
+	 * Muestra la página principal (Index) de la aplicación.
+	 * <p>
+	 * Recupera el usuario autenticado desde el contexto de seguridad de Spring y
+	 * carga el listado completo de personas para ser mostrado en la vista.
+	 * </p>
+	 * 
+	 * @return {@link ModelAndView} configurado con la vista index, el nombre de
+	 *         usuario y la lista de personas.
+	 */
 	// GET Example: SERVER/index
 	@GetMapping("/index")
 	public ModelAndView index() {
-		
+
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.INDEX);
-		
+
+		// Obtención del usuario principal desde el contexto de Spring Security
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		modelAndView.addObject("username",user.getUsername());
+
+		modelAndView.addObject("username", user.getUsername());
 		modelAndView.addObject("persons", personService.getAll());
-		
+
 		return modelAndView;
 	}
 
 	// GET Example: SERVER/hello?name=someName
-	/*
-	 * (@RequestParam(name="nombre", required=false, defaultValue="null")String
-	 * name) : el nombre del primer parametro, name="nombre", debe coincidir con el
-	 * de la ruta ?nombre=someName required=false: indica que no es requerido
-	 * defaultValue="null": indica que puede ser nulo String name : dentro del
-	 * metodo sera de tipo cadena y se llamara name puede identificarse con
-	 * cualquier variable
+	/**
+	 * Ejemplo de endpoint que recibe parámetros mediante Query Params
+	 * (?nombre=valor).
+	 * <p>
+	 * El uso de {@link RequestParam} permite capturar datos opcionales de la URL.
+	 * </p>
+	 * 
+	 * @param name Nombre recibido en la URL. Configurado como
+	 *             {@code required = false} para permitir llamadas sin parámetros y
+	 *             {@code defaultValue = "null"} para evitar valores nulos en la
+	 *             lógica.
+	 * @return {@link ModelAndView} que renderiza la vista de saludo.
 	 */
 	@GetMapping("/hello")
 	public ModelAndView helloParams1(
@@ -57,6 +91,18 @@ public class HomeController {
 	}
 
 	// Get example : SERVER/hello/someName
+	/**
+	 * Ejemplo de endpoint que recibe parámetros mediante Path Variables
+	 * (/hello/valor).
+	 * <p>
+	 * A diferencia de los Query Params, {@link PathVariable} extrae el valor
+	 * directamente de un segmento dinámico definido en la ruta de la anotación
+	 * {@link GetMapping}.
+	 * </p>
+	 * 
+	 * @param nombre Valor extraído del segmento "{name}" de la URL.
+	 * @return {@link ModelAndView} con el atributo 'nombre' cargado para la vista.
+	 */
 	@GetMapping("/hello/{name}")
 	public ModelAndView helloparam2(@PathVariable("name") String nombre) {
 
@@ -70,7 +116,7 @@ public class HomeController {
 		return mV;
 	}
 
-	/*
+	/**
 	 * Una peticicón que en verdad es una redirección: Se puede usar una redirección
 	 * en caso que una vista no contenga toda la información que necesita para
 	 * devolver un recurso. Se devuelve una instancia de RedirectView, ya que esta
