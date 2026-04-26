@@ -1,11 +1,34 @@
-<div class="col-lg-4 mb-4">
-	<div class="card h-100" th:object="${person}">
-		<h4 class="card-header" th:text="${person.name}" />
+<!--
+Fragmento parcial inyectado por AJAX dentro de #div-select-person.
+Este bloque usa la grilla de Bootstrap para mostrarse como tarjeta responsive.
+-->
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+	<!--
+	card: componente visual.
+	h-100: iguala altura cuando haya varias tarjetas en la misma fila.
+	shadow-sm: relieve suave.
+	th:object define el objeto base del fragmento (person).
+	-->
+	<div class="card h-100 shadow-sm" th:object="${person}">
+		<!-- card-header con el nombre dinámico de la persona -->
+		<h4 class="card-header" th:text="*{name}">Person name</h4>
+
 		<div class="card-body">
-			<p class="card-text">Detailes about this person</p>
+			<!-- Texto descriptivo del bloque -->
+			<p class="card-text mb-2">Detalles de esta persona.</p>
+			<!--
+			th:text imprime el id para que veas otro dato dinámico en el fragmento.
+			small/text-muted son utilidades visuales de Bootstrap.
+			-->
+			<p class="small text-muted mb-0">ID: <span th:text="*{id}">0</span></p>
 		</div>
-		<div class="card-footer">
-			<a class="btn btn-primary" th:href="@{/person/{id}(id=${person.id})}">View</a>
+
+		<div class="card-footer bg-white border-top-0">
+			<!--
+			th:href arma una URL con path variable, por ejemplo /person/3.
+			btn-sm y btn-block mejoran el botón en este formato de tarjeta.
+			-->
+			<a class="btn btn-primary btn-sm btn-block" th:href="@{/person/{id}(id=*{id})}">Ver perfil</a>
 		</div>
 	</div>
 </div>

@@ -20,10 +20,10 @@ import com.unla.utilizandoSpring.service.IPersonService;
  * parámetros a través de peticiones GET.
  * </p>
  * <p>
- * <strong>Nota técnica:</strong> Actúa como el punto de entrada post-autenticación. 
- * Utiliza el SecurityContext de Spring para recuperar los detalles del usuario 
- * actualmente logueado, demostrando la integración entre la capa de seguridad 
- * y la capa de presentación.
+ * <strong>Nota técnica:</strong> Actúa como el punto de entrada
+ * post-autenticación. Utiliza el SecurityContext de Spring para recuperar los
+ * detalles del usuario actualmente logueado, demostrando la integración entre
+ * la capa de seguridad y la capa de presentación.
  * </p>
  */
 @Controller

@@ -1,25 +1,86 @@
-<table border="1px">
-	<thead>
-		<tr> <!-- -->
-			<th>Name</th>
-			<th>Degrees</th>
-			<th>View</th>
-		</tr>
-	</thead>
-	<tbody> <!-- Cuerpo de la tabla -->
-		<tr th:each="person : ${persons}"> <!-- fila -->
-			<td><span th:text="${person.name}" /></td> <!-- dato de la celda, una columna -->
-			<td>
-				<ul>
-					<li th:each="degree : ${person.degrees}"
-					    th:text="${degree.name}" ></li>
-				</ul>
-				<span th:if="${#lists.isEmpty(person.degrees)}">No titles</span>
-			</td>
-			<td> 
-				<a th:href="@{/person/{id}(id=${person.id})}">View</a>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<a href="/person/new">Create new person</a>
+<!DOCTYPE html>
+<!-- Lista principal de personas -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Person | Index</title>
+	<!-- Bootstrap local del proyecto -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/css/modern-business.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light">
+	<!-- body: contiene todo lo visible en la página -->
+	<div class="container mt-5">
+		<!-- h1: encabezado principal de la vista -->
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h1 class="h4 mb-0">Personas</h1>
+			<div>
+				<!-- a: enlace de navegación -->
+				<a class="btn btn-outline-secondary btn-sm" href="/index">Home</a>
+				<a class="btn btn-primary btn-sm" href="/person/new">Crear persona</a>
+			</div>
+		</div>
+
+		<div class="card shadow-sm">
+			<div class="card-body p-0">
+				<!--
+				Sintaxis HTML de tabla:
+				- table: contenedor de toda la tabla.
+				- thead: cabecera (títulos de columnas).
+				- tbody: cuerpo (filas con datos).
+				- tr: fila.
+				- th: celda de encabezado.
+				- td: celda de dato.
+
+				Tabla Bootstrap.
+				th:each="person : ${persons}": recorre la lista persons enviada por el controlador.
+				${...} accede a variables del modelo (contexto general).
+				-->
+				<table class="table table-hover mb-0">
+					<thead class="thead-light">
+						<tr>
+							<th>Name</th>
+							<th>Degrees</th>
+							<th class="text-right">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- tr: cada iteración genera una fila de persona -->
+						<tr th:each="person : ${persons}">
+							<!-- th:text imprime el valor de la propiedad -->
+							<td><span th:text="${person.name}">Person name</span></td>
+							<td>
+								<!-- ul/li: lista HTML para mostrar múltiples títulos -->
+								<ul class="mb-0 pl-3">
+									<!-- Recorre los titulos de cada persona -->
+									<li th:each="degree : ${person.degrees}" th:text="${degree.name}">Degree</li>
+								</ul>
+								<!--
+								th:if renderiza el texto solo si la lista esta vacia.
+								#lists es utilidad de Thymeleaf para colecciones.
+								-->
+								<span class="text-muted small" th:if="${#lists.isEmpty(person.degrees)}">No titles</span>
+							</td>
+							<td class="text-right">
+								<!--
+								th:href construye URL con path variable.
+								Ejemplo final: /person/5
+								-->
+								<a class="btn btn-sm btn-outline-primary"
+									th:href="@{/person/{id}(id=${person.id})}">Ver / Editar</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

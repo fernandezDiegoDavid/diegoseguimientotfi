@@ -1,12 +1,75 @@
-<form action="#" th:action="@{/person/update}" th:object="${person}"
-	method="post">
-	<input type="hidden" th:field="*{id}" />
-	</p>
-	<p>
-		Name: <input type="text" th:field="*{name}" />
-	</p>
-	<input type="submit" value="Edit" />
-</form>
-<form action="#" th:action="@{/person/delete/{id}(id=${person.id})}" method="post">
-	<input type="submit" value="delete person" />
-</form>
+<!DOCTYPE html>
+<!-- Vista completa para editar/eliminar una persona -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Person | Update</title>
+	<!-- Bootstrap local del proyecto -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/css/modern-business.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light">
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6">
+				<div class="card shadow-sm">
+					<div class="card-body p-4">
+						<h1 class="h4 mb-4">Editar persona</h1>
+
+						<!--
+						th:object="${person}": define el objeto base del formulario.
+						- ${person} usa variable del modelo (ModelAndView.addObject("person", ...)).
+						- Desde aqui, *{...} apunta a propiedades de ese objeto base.
+						th:action="@{/person/update}": URL del endpoint POST de update.
+						-->
+						<form action="#" th:action="@{/person/update}" th:object="${person}" method="post">
+
+							<!--
+							th:field="*{id}": enlaza este input con la propiedad id del objeto base.
+							Se envia oculto para que el backend sepa que registro actualizar.
+							-->
+							<input type="hidden" th:field="*{id}" />
+
+							<div class="form-group">
+								<label for="name">Nombre</label>
+								<!--
+								th:field="*{name}":
+								- carga el valor actual de person.name al renderizar la vista.
+								- al enviar el form, manda el nuevo valor bajo ese mismo campo.
+								Thymeleaf tambien genera id/name compatibles automaticamente.
+								-->
+								<input id="name" type="text" class="form-control" th:field="*{name}" />
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-block">Guardar cambios</button>
+						</form>
+
+						<hr class="my-4" />
+
+						<!--
+						Formulario independiente para eliminar.
+						th:action con path variable:
+						@{/person/delete/{id}(id=${person.id})}
+						- ${person.id} toma el id desde el modelo (expresion de variable).
+						- lo inserta en la URL final, por ejemplo /person/delete/3.
+						-->
+						<form action="#" th:action="@{/person/delete/{id}(id=${person.id})}" method="post"
+							onsubmit="return confirm('Seguro que desea eliminar esta persona?');">
+							<button type="submit" class="btn btn-outline-danger btn-block">Eliminar persona</button>
+						</form>
+
+						<a class="btn btn-link btn-block mt-3" href="/person">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
